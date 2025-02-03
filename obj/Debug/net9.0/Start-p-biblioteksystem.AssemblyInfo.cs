@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Start-p-biblioteksystem")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1c8719417fe55fde98f5c0fee0086b1765645610")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74d2ac7739078e198b17ece261a3444b45f72dda")]
 [assembly: System.Reflection.AssemblyProductAttribute("Start-p-biblioteksystem")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Start-p-biblioteksystem")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

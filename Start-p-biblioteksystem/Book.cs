@@ -1,4 +1,3 @@
-using Stateless;
 using System;
 
 namespace Biblioteksystem
@@ -19,48 +18,35 @@ namespace Biblioteksystem
         public int PublicationYear { get; private set; }
         public BookStatus Status { get; private set; }
 
-        private readonly StateMachine<BookStatus, string> _stateMachine;
-
         public Book(string title, string author, int publicationYear)
         {
             Title = title;
             Author = author;
             PublicationYear = publicationYear;
             Status = BookStatus.Bestilt;
-
-            _stateMachine = new StateMachine<BookStatus, string>(BookStatus.Bestilt);
-
-            // Definerer statene og overganger
-            _stateMachine.Configure(BookStatus.Bestilt)
-                .Permit("Levering", BookStatus.Tilgjengelig);
-
-            _stateMachine.Configure(BookStatus.Tilgjengelig)
-                .Permit("Lån", BookStatus.Utlånt)
-                .Permit("Tapt", BookStatus.Tapt);
-
-            _stateMachine.Configure(BookStatus.Utlånt)
-                .Permit("Reserver", BookStatus.Reservert)
-                .Permit("Tapt", BookStatus.Tapt);
-
-            _stateMachine.Configure(BookStatus.Reservert)
-                .Permit("Tilbakelevert", BookStatus.Utlånt)
-                .Permit("Tapt", BookStatus.Tapt);
-
-            _stateMachine.Configure(BookStatus.Tapt)
-                .Permit("Bestilt", BookStatus.Bestilt);
         }
 
-        public void ChangeStatus(string trigger)
+        public void ChangeStatus(BookStatus newStatus)
         {
-            if (_stateMachine.CanFire(trigger))
+            if (IsValidStatusTransition(Status, newStatus))
             {
-                _stateMachine.Fire(trigger);
-                Status = _stateMachine.State;
+                Status = newStatus;
             }
             else
             {
-                throw new InvalidOperationException($"Ugyldig statusovergang fra {Status} med trigger: {trigger}");
+                throw new InvalidOperationException($"Ugyldig statusovergang fra {Status} til {newStatus}.");
             }
+        }
+
+        private bool IsValidStatusTransition(BookStatus currentStatus, BookStatus newStatus)
+        {
+            return (currentStatus == BookStatus.Bestilt && newStatus == BookStatus.Tilgjengelig) ||
+                   (currentStatus == BookStatus.Tilgjengelig && (newStatus == BookStatus.Utlånt || newStatus == BookStatus.Tapt)) ||
+                   (currentStatus == BookStatus.Utlånt && (newStatus == BookStatus.Reservert || newStatus == BookStatus.Tapt)) ||
+                   (currentStatus == BookStatus.Reservert && newStatus == BookStatus.Utlånt) ||
+                   (currentStatus == BookStatus.Tilgjengelig && newStatus == BookStatus.Tapt) ||
+                   (currentStatus == BookStatus.Utlånt && newStatus == BookStatus.Tapt) ||
+                   (currentStatus == BookStatus.Reservert && newStatus == BookStatus.Tapt);
         }
 
         public override string ToString()

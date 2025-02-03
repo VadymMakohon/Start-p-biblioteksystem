@@ -26,27 +26,38 @@ namespace Biblioteksystem
             Status = BookStatus.Bestilt;
         }
 
-        public void ChangeStatus(BookStatus newStatus)
+        public void ChangeStatus(string trigger)
         {
-            if (IsValidStatusTransition(Status, newStatus))
+            switch (trigger)
             {
-                Status = newStatus;
-            }
-            else
-            {
-                throw new InvalidOperationException($"Ugyldig statusovergang fra {Status} til {newStatus}.");
-            }
-        }
+                case "Levering":
+                    if (Status == BookStatus.Bestilt)
+                        Status = BookStatus.Tilgjengelig;
+                    break;
 
-        private bool IsValidStatusTransition(BookStatus currentStatus, BookStatus newStatus)
-        {
-            return (currentStatus == BookStatus.Bestilt && newStatus == BookStatus.Tilgjengelig) ||
-                   (currentStatus == BookStatus.Tilgjengelig && (newStatus == BookStatus.Utlånt || newStatus == BookStatus.Tapt)) ||
-                   (currentStatus == BookStatus.Utlånt && (newStatus == BookStatus.Reservert || newStatus == BookStatus.Tapt)) ||
-                   (currentStatus == BookStatus.Reservert && newStatus == BookStatus.Utlånt) ||
-                   (currentStatus == BookStatus.Tilgjengelig && newStatus == BookStatus.Tapt) ||
-                   (currentStatus == BookStatus.Utlånt && newStatus == BookStatus.Tapt) ||
-                   (currentStatus == BookStatus.Reservert && newStatus == BookStatus.Tapt);
+                case "Lån":
+                    if (Status == BookStatus.Tilgjengelig)
+                        Status = BookStatus.Utlånt;
+                    break;
+
+                case "Reserver":
+                    if (Status == BookStatus.Utlånt)
+                        Status = BookStatus.Reservert;
+                    break;
+
+                case "Tilbakelevert":
+                    if (Status == BookStatus.Reservert)
+                        Status = BookStatus.Utlånt;
+                    break;
+
+                case "Tapt":
+                    if (Status == BookStatus.Tilgjengelig || Status == BookStatus.Utlånt || Status == BookStatus.Reservert)
+                        Status = BookStatus.Tapt;
+                    break;
+
+                default:
+                    throw new InvalidOperationException($"Ugyldig statusovergang: {trigger} fra {Status}");
+            }
         }
 
         public override string ToString()

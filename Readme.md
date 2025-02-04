@@ -4,7 +4,7 @@ Dette prosjektet implementerer en Book-klasse som representerer et konkret eksem
 
 ### ⭐ Show Your Support
 
-If you like this project, give it a ⭐ on GitHub! Your support motivates me to create even more useful tools for runners like us. 😊
+If you like this project, give it a ⭐ on GitHub! Your support motivates means a lot for me. 😊
 
 ## 👤Contributor
 

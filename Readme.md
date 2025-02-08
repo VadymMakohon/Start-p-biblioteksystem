@@ -7,6 +7,12 @@ Dette prosjektet implementerer en Book-klasse som representerer et konkret eksem
 - ❌ Forhindrer ugyldige statusendringer ved hjelp av feilhåndtering
 - 📜 Gir en tekstlig representasjon av bokens nåværende status
 
+## 🏗 Teknologier brukt
+- Språk: C#
+- Paradigme: Objektorientert programmering (OOP)
+- Tilstandshåndtering: Enum (BookStatus) for å definere bokens status
+- Feilhåndtering: try-catch for å håndtere ugyldige statusoverganger
+
 ### ⭐ Show Your Support
 
 If you like this project, give it a ⭐ on GitHub! Your support motivates means a lot for me. 😊

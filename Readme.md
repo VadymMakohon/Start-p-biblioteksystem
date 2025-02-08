@@ -1,4 +1,4 @@
-# Start på biblioteksystem
+# 📚 Start på biblioteksystem
 
 Dette prosjektet implementerer en Book-klasse som representerer et konkret eksemplar av en bok i et biblioteksystem. Klassen håndterer bokas tittel, forfatter, utgivelsesår og status. Statusen kan endres gjennom en metode som sikrer at kun lovlige statusoverganger utføres.
 
